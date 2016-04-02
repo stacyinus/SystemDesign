@@ -22,30 +22,69 @@ unfollow(from_user_id, to_user_id). from_user_id unfollowed to to_user_id.
  * }
  */
 public class MiniTwitter {
+    HashMap<Integer,List<Tweet>> timelines;
+    HashMap<Integer,List<Integer>> feeds;//only keeps 10 value per list.
+    HashMap<Integer,List<Integer>> following;
+    HashMap<Integer,List<Integer>> followBy;
 
     public MiniTwitter() {
-        // initialize your data structure here.
+        timelines = new HashMap<Integer,List<Tweet>>();
+        feeds = new HashMap<Integer,List<Integer>>();
+        following = new HashMap<Integer,List<Integer>>();
+        followBy = HashMap<Integer,List<Integer>>();
     }
 
     // @param user_id an integer
     // @param tweet a string
     // return a tweet
     public Tweet postTweet(int user_id, String tweet_text) {
-        //  Write your code here
+        List<Tweet> tl;
+        if(timelines.containsKey(user_id))
+            tl = timelines.get(user_id);
+        else
+            tl = new ArrayList<String>;
+        tl.add(Tweet.create(user_id,tweet_text));
+
+        if(followBy.containsKey(user_id)){
+            List<Integer> followers = followBy.get(user_id);
+            for(Integer id:followers){
+                List<Integer> activeFeed;
+                if(feeds.containsKey(id))
+                    activeFeed = feeds.get(id);
+                else 
+                    activeFeed = new LinkedList<Integer>();
+                if(activeFeed.size()==10)
+                    activeFeed.poll();
+                activeFeed.offer(user_id);
+            }
+        }
+
     }
 
     // @param user_id an integer
     // return a list of 10 new feeds recently
     // and sort by timeline
     public List<Tweet> getNewsFeed(int user_id) {
-        // Write your code here
+        List<Tweet> tl;
+        if(timelines.containsKey(user_id))
+            tl = timelines.get(user_id);
+        else
+            tl = new ArrayList<String>;
+        List<Tweet> result = new ArrayList<Tweet>();
+        for(int count=0,j=tl.size();i<10;i++){
+
+        }
     }
         
     // @param user_id an integer
     // return a list of 10 new posts recently
     // and sort by timeline
     public List<Tweet>  getTimeline(int user_id) {
-        // Write your code here
+        List<String> tl;
+        if(timelines.containsKey(user_id))
+            tl = timelines.get(user_id);
+        else
+            tl = new ArrayList<String>;
     }
 
     // @param from_user_id an integer
@@ -61,4 +100,5 @@ public class MiniTwitter {
     public void unfollow(int from_user_id, int to_user_id) {
         // Write your code here
     }
+        }
 }
